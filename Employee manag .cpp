@@ -5,7 +5,7 @@
 
 using namespace std;
 
-// Employee class
+// Employee managment software
 class Employee {
 public:
 Employee(string name, int age, double salary)
