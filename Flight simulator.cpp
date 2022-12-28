@@ -1,7 +1,7 @@
 #include <iostream>
 #include <cmath>
 
-// Define constants for the aircraft's physical properties
+// Define constants for the aircraft's physical propertiess
 const double mass = 1000.0; // mass in kilograms
 const double wing_area = 50.0; // wing area in square meters
 const double lift_coefficient = 1.5; // lift coefficient
