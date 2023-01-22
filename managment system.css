@@ -1,0 +1,70 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+class Employee {
+    protected:
+        string name;
+        int id;
+        double salary;
+    public:
+        Employee(string n, int i, double s) : name(n), id(i), salary(s) {}
+        virtual double calculateTax() = 0;
+        virtual void printInfo() = 0;
+};
+
+class FullTimeEmployee : public Employee {
+    public:
+        FullTimeEmployee(string n, int i, double s) : Employee(n, i, s) {}
+        double calculateTax() {
+            return salary * 0.15;
+        }
+        void printInfo() {
+            cout << "Full Time Employee: " << name << ", ID: " << id << ", Salary: $" << salary << ", Tax: $" << calculateTax() << endl;
+        }
+};
+
+class PartTimeEmployee : public Employee {
+    public:
+        PartTimeEmployee(string n, int i, double s) : Employee(n, i, s) {}
+        double calculateTax() {
+            return salary * 0.1;
+        }
+        void printInfo() {
+            cout << "Part Time Employee: " << name << ", ID: " << id << ", Salary: $" << salary << ", Tax: $" << calculateTax() << endl;
+        }
+};
+
+int main() {
+    vector<Employee*> employees;
+    string fileName;
+    cout << "Enter the name of the input file: ";
+    cin >> fileName;
+    ifstream inFile(fileName);
+    if (inFile.is_open()) {
+        string type, name;
+        int id;
+        double salary;
+        while (inFile >> type >> name >> id >> salary) {
+            if (type == "F") {
+                employees.push_back(new FullTimeEmployee(name, id, salary));
+            } else if (type == "P") {
+                employees.push_back(new PartTimeEmployee(name, id, salary));
+            }
+        }
+        inFile.close();
+    } else {
+        cout << "Unable to open file." << endl;
+        return 1;
+    }
+    for (auto employee : employees) {
+        employee->printInfo();
+    }
+    for (auto employee : employees) {
+        delete employee;
+    }
+    return 0;
+}
